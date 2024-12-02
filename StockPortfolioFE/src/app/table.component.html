@@ -1,0 +1,54 @@
+<button (click)="addItem()">Add Item</button>
+<button (click)="deleteRows()">Delete Selected</button>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  <!-- Checkbox Column -->
+
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (change)="$event ? masterToggle(row) : null"
+                    [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- name Column -->
+  <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Symbol</b> </th>
+    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+  </ng-container>
+
+  <!-- email Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Name</b> </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- phone Column -->
+  <ng-container matColumnDef="previousPrice">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Previous Closing Price</b> </th>
+    <td mat-cell *matCellDef="let element"> {{element.previousPrice}} </td>
+  </ng-container>
+
+  <!-- website Column -->
+  <ng-container matColumnDef="currentPrice">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <b>Current Price</b> </th>
+    <td mat-cell *matCellDef="let element"> {{element.currentPrice}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> <b>Action</b> </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon (click)="editStock(element)">edit</mat-icon>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
